@@ -1,0 +1,88 @@
+from tkinter import *
+import requests
+
+URL = "https://api.openweathermap.org/data/2.5/weather"
+API_KEY = "ecb6e3648f0b6f3b680cdc2e67887de9"
+
+window = Tk()
+
+window.geometry("400x600")
+window.title("Weather App")
+window.config(bg = "#133463")
+
+headerFrame = Frame(window, bg = "#0D2242")
+headerFrame.pack(side = TOP, fill = X)
+
+footerFrame = Frame(window, bg = "#0D2242")
+footerFrame.pack(side = BOTTOM, fill = X)
+
+inputFrame = Frame(window, bg = "#1E4377")
+inputFrame.pack(side = TOP, fill = BOTH)
+
+infoFrame = Frame(window, bg = "#1E4377")
+infoFrame.pack(side = TOP, fill = BOTH, expand = True)
+
+titleLabel = Label(headerFrame, text = "WEATHERCAST APP", font = ("Arial", 22), bg = "#0D2242", fg = "White")
+titleLabel.pack(pady = 20)
+
+footerLabel = Label(footerFrame, text = "By Kinjal Priyadarshini", font = ("Arial", 16), bg = "#0D2242", fg = "White")
+footerLabel.pack(pady = 10) 
+
+input = Entry(inputFrame, text = "City name", font = ("Arial", 16), bg = "#A7A8AA", fg = "White", justify = "center")
+input.pack(pady = (35, 10)) 
+
+tempLabel = Label(infoFrame, text="", bg = "#1E4377", fg = "White")
+tempLabel.pack(pady = (20, 10))
+
+feelsLabel = Label(infoFrame, text="", bg = "#1E4377", fg = "White")
+feelsLabel.pack(pady = (20, 10))
+
+weatherLabel = Label(infoFrame, text="", bg = "#1E4377", fg = "White")
+weatherLabel.pack(pady = (20, 10))
+
+tempMinLabel = Label(infoFrame, text="", bg = "#1E4377", fg = "White")
+tempMinLabel.pack(pady = (20, 10))
+
+tempMaxLabel = Label(infoFrame, text="", bg = "#1E4377", fg = "White")
+tempMaxLabel.pack(pady = (20, 10))
+
+windSpeedLabel = Label(infoFrame, text="", bg = "#1E4377", fg = "White")
+windSpeedLabel.pack(pady = (20, 10))
+
+
+def findWeatherInfo():
+    city = input.get().strip().lower()
+    parameters = {
+        "q": city, 
+        "appid": API_KEY
+    }
+    response = requests.get(url = URL, params = parameters)
+    data = response.json()
+    print(data)
+    # y = data["weather"]
+    # z = y[0]
+    # print(z["description"])
+    #print(data["weather"][0]["description"])
+    tempLabel.config(text = f"Temperature: {data['main']['temp']}")
+    feelsLabel.config(text = f"Feels Like: {data['main']['feels_like']}")
+    weatherLabel.config(text = f"Weather: {data['weather'][0]['description']}")
+    tempMinLabel.config(text = f"Min Temp: {data['main']['temp_min']}")
+    tempMaxLabel.config(text = f"Max Temp: {data['main']['temp_max']}")
+    windSpeedLabel.config(text = f"Wind Speed: {data['wind']['speed']}")
+
+
+#http: supports get, post, put, delete
+
+submit = Button(inputFrame, text = "Submit", font = ("Arial", 16), bg = "#0D2242", fg = "White", command = findWeatherInfo)
+submit.pack(pady = 10) 
+
+#header
+#footer
+#input
+#information
+#button1 = Button(headerFrame, text="file")
+#button1.pack(padx = 10, pady = 10)
+
+
+
+window.mainloop() 

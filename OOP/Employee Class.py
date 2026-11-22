@@ -38,42 +38,36 @@ Salary: {self.netSalary()}
 
 class Manager(Employee):
     def __init__(self, name, id, basicSalary, hra, da, tax, department, managementAllowance):
-        self.name = name
-        self.id = id
-        self.basicSalary = basicSalary
-        self.hra = hra
-        self.da = da
-        self.tax = tax
+        super().__init__(name, id, basicSalary, hra, da, tax)
         self.department = department
         self.allowance = managementAllowance
  
 
-    # def details(self):
-    #     print(f"""
-    #     Department: {self.department}
-    #     Management Allownace: {self.allowance}
-    #     """)
+    def details(self):
+         super().details()
+         print(f"""
+         Department: {self.department}
+         Management Allownace: {self.allowance}
+         """)
 
 class Developer(Employee):
     def __init__(self, name, id, basicSalary, hra, da, tax, progLanguage, projectAllowance):
-        self.name = name
-        self.id = id
-        self.basicSalary = basicSalary
-        self.hra = hra
-        self.da = da
-        self.tax = tax
+        super().__init__(name, id, basicSalary, hra, da, tax)
         self.language = progLanguage
         self.allowance = projectAllowance
 
+#oveeride method
     def grossSalary(self):
-            self.grossSalary(self) 
-            totalSal += self.allowance 
+            total =  super().grossSsalary
+            total += self.allowance 
+            return total
 
-    # def details(self): 
-    #     print(f"""
-    #     Programming Language: {self.departement}
-    #     Project Allownace: {self.allowance}
-    #     """)
+    def details(self): 
+        super().details()
+        print(f"""
+        Programming Language: {self.departement}
+        Project Allownace: {self.allowance}
+        """)
 
 priya = Manager("Priya", "M101", 50000, 20, 10, 0.10, "Sales", 10000)
 rahul = Manager("Rahul", "D101", 40000, 20, 10, 0.10, "Python", 5000)
